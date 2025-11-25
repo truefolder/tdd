@@ -12,10 +12,10 @@ public class CircularCloudLayouter(Point center, ICoordinatesProvider coordinate
         return rect;
     }
 
-    public Point GetNextRectanglePoint(Size rectangleSize)
+    private Point GetNextRectanglePoint(Size rectangleSize)
     {
         var nextPoint = coordinatesProvider.GetNextPoint();
-        
-        
+
+        throw new NotImplementedException();
     }
 }

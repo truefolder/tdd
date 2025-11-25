@@ -6,7 +6,7 @@ public class ArchimedesSpiral(Point center, double tightness, double distanceBet
 {
     public IEnumerable<Point> GetNextPoint()
     {
-        
+        throw new NotImplementedException();
     }
     
     private (double x, double y) ConvertPolarCoordsToCartesian(double r, double theta)
