@@ -2,17 +2,30 @@
 
 namespace TagCloud.CoordinatesProviders;
 
-public class ArchimedesSpiral(Point center, double tightness, double distanceBetweenPoints) : ICoordinatesProvider
+public class ArchimedesSpiral(Point center, float tightness, float distanceBetweenPoints) : ICoordinatesProvider
 {
     public IEnumerable<Point> GetNextPoint()
     {
-        throw new NotImplementedException();
+        var degreeStep = distanceBetweenPoints * MathF.PI / 180;
+        for (var degree = 0f; ; degree += degreeStep)
+        {
+            var radius = tightness * degree;
+            
+            var coords = ConvertPolarCoordsToCartesian(radius, degree);
+            
+            coords.x += center.X;
+            coords.y += center.Y;
+            var pointF = new PointF(coords.x, coords.y);
+            yield return Point.Round(pointF);
+        }
+        // ReSharper disable once IteratorNeverReturns
+        // TODO: это норм или нет?
     }
     
-    private (double x, double y) ConvertPolarCoordsToCartesian(double r, double theta)
+    private (float x, float y) ConvertPolarCoordsToCartesian(float radius, float degree)
     {
-        var x = r * Math.Cos(theta);
-        var y = r * Math.Sin(theta);
+        var x = radius * MathF.Cos(degree);
+        var y = radius * MathF.Sin(degree);
         return (x, y);
     }
 }
