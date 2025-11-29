@@ -11,11 +11,12 @@ public class ArchimedesSpiralTests
     [Test]
     public void GetNextPoint_ShouldReturnPointInCenter_WhenCalledOnce()
     {
-        var center = new Point(0, 0);
+        var center = new PointF(0, 0);
         archimedesSpiral = new ArchimedesSpiral(center, 1, 1);
         
-        var point = archimedesSpiral.GetNextPoint();
+        var point = archimedesSpiral.GetNextPoint().Take(2).ToList();
 
         point.First().Should().Be(center);
+        point.Last().Should().NotBe(point.First());
     }
 }

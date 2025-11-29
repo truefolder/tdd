@@ -2,9 +2,9 @@
 
 namespace TagCloud.CoordinatesProviders;
 
-public class ArchimedesSpiral(Point center, float tightness, float distanceBetweenPoints) : ICoordinatesProvider
+public class ArchimedesSpiral(PointF center, float tightness, float distanceBetweenPoints) : ICoordinatesProvider
 {
-    public IEnumerable<Point> GetNextPoint()
+    public IEnumerable<PointF> GetNextPoint()
     {
         var degreeStep = distanceBetweenPoints * MathF.PI / 180;
         for (var degree = 0f; ; degree += degreeStep)
@@ -15,8 +15,7 @@ public class ArchimedesSpiral(Point center, float tightness, float distanceBetwe
             
             coords.x += center.X;
             coords.y += center.Y;
-            var pointF = new PointF(coords.x, coords.y);
-            yield return Point.Round(pointF);
+            yield return new PointF(coords.x, coords.y);
         }
         // ReSharper disable once IteratorNeverReturns
         // TODO: это норм или нет?
