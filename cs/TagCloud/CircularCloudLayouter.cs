@@ -12,7 +12,7 @@ public class CircularCloudLayouter(Point center, ICoordinatesProvider coordinate
         if (CheckSizeIncorrectness(rectangleSize))
             throw new ArgumentException("Size is incorrect");
         
-        var rect = new Rectangle(GetNextRectanglePoint(rectangleSize), rectangleSize);
+        var rect = new Rectangle(GetNextRectanglePoint(rectangleSize), rectangleSize).ShiftToCenter(center, Rectangles);
         Rectangles.Add(rect);
         return rect;
     }

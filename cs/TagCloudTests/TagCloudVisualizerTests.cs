@@ -11,7 +11,7 @@ public class TagCloudVisualizerTests
     private TagCloudVisualizer visualizer;
     private ICoordinatesProvider coordinatesProvider;
     private CircularCloudLayouter layouter;
-    private Random random = new();
+    private readonly Random random = new();
 
     [SetUp]
     public void SetUp()
@@ -26,7 +26,7 @@ public class TagCloudVisualizerTests
     public void DrawRectangles_ShouldSaveImageInPath_WhenCorrectPathIsProvided()
     {
         var rectangles = new List<Rectangle>();
-        for (int i = 0; i < 175; ++i)
+        for (int i = 0; i < 200; ++i)
         {
             var rectangle = layouter.PutNextRectangle(new Size(random.Next(10, 100), random.Next(10, 100)));
             rectangles.Add(rectangle);

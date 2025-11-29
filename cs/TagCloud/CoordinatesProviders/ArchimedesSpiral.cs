@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using TagCloud.Utils;
 
 namespace TagCloud.CoordinatesProviders;
 
@@ -11,7 +12,7 @@ public class ArchimedesSpiral(PointF center, float tightness, float distanceBetw
         {
             var radius = tightness * degree;
             
-            var coords = ConvertPolarCoordsToCartesian(radius, degree);
+            var coords = PolarCoordinatesUtils.ConvertPolarCoordsToCartesian(radius, degree);
             
             coords.x += center.X;
             coords.y += center.Y;
@@ -19,12 +20,5 @@ public class ArchimedesSpiral(PointF center, float tightness, float distanceBetw
         }
         // ReSharper disable once IteratorNeverReturns
         // TODO: это норм или нет?
-    }
-    
-    private (float x, float y) ConvertPolarCoordsToCartesian(float radius, float degree)
-    {
-        var x = radius * MathF.Cos(degree);
-        var y = radius * MathF.Sin(degree);
-        return (x, y);
     }
 }
