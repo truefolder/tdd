@@ -17,7 +17,7 @@ public class TagCloudVisualizerTests
     public void SetUp()
     {
         var center = new Point(0, 0);
-        visualizer = new TagCloudVisualizer();
+        visualizer = new TagCloudVisualizer(Color.Blue, Color.DarkOrange);
         coordinatesProvider = new ArchimedesSpiral(center, 3, 1);
         layouter = new CircularCloudLayouter(center, coordinatesProvider);
     }

@@ -43,7 +43,7 @@ public class Tests
         rectangle1.IntersectsWith(rectangle2).Should().BeFalse();
     }
 
-    public static IEnumerable<TestCaseData> GetInvalidSizes()
+    private static IEnumerable<TestCaseData> GetInvalidSizes()
     {
         yield return new TestCaseData(new Size(-100, 100))
             .SetName("PutNextRectangle_ShouldThrow_WhenWidthIsNegative");
@@ -62,8 +62,8 @@ public class Tests
         yield return new TestCaseData(new Size(0, 0))
             .SetName("PutNextRectangle_ShouldThrow_WhenBothWidthAndHeightAreZero");
     }
-    
-    public static IEnumerable<TestCaseData> GetValidSizes()
+
+    private static IEnumerable<TestCaseData> GetValidSizes()
     {
         yield return new TestCaseData(new Size(100, 100));
         yield return new TestCaseData(new Size(1, 1));
