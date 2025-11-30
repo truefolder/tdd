@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using FluentAssertions;
+using NUnit.Framework.Interfaces;
 using TagCloud;
 using TagCloud.CoordinatesProviders;
+using TagCloud.Visualizers;
 
 namespace TagCloudTests;
 
@@ -15,6 +17,23 @@ public class Tests
         var center = new Point(0, 0);
         var provider = new ArchimedesSpiral(center, 1, 1);
         layouter = new CircularCloudLayouter(center, provider);
+    }
+    
+    [TearDown]
+    public void TearDown()
+    {
+        var testStatus = TestContext.CurrentContext.Result.Outcome.Status;
+        
+        if (testStatus != TestStatus.Failed)
+            return;
+        
+        var testName = TestContext.CurrentContext.Test.Name;
+        var savePath = $"{AppDomain.CurrentDomain.BaseDirectory}/{testName}failed.png";
+
+        var visualizer = new TagCloudVisualizer(Color.Black, Color.Red);
+        visualizer.DrawRectangles(layouter.Rectangles.ToArray(), new Size(1920, 1080), savePath);
+        
+        TestContext.Out.WriteLine($"Saved visualization to {savePath})");
     }
 
     [TestCaseSource(nameof(GetInvalidSizes))]
@@ -41,6 +60,20 @@ public class Tests
         var rectangle2 = layouter.PutNextRectangle(new Size(10, 10));
         
         rectangle1.IntersectsWith(rectangle2).Should().BeFalse();
+    }
+
+    [Test]
+    public void PutNextRectangle_RectanglesShouldNotIntersect_WhenMultipleRectanglesGenerated()
+    {
+        var rectangles = new List<Rectangle>();
+        var random = new Random();
+
+        for (var i = 0; i < 100; i++)
+            rectangles.Add(layouter.PutNextRectangle(new Size(random.Next(10, 100), random.Next(10, 100))));
+        
+        foreach (var firstRectangle in rectangles)
+            foreach (var secondRectangle in rectangles.Where(r => firstRectangle != r))
+                firstRectangle.IntersectsWith(secondRectangle).Should().BeFalse();
     }
 
     private static IEnumerable<TestCaseData> GetInvalidSizes()
