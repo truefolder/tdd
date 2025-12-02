@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using FluentAssertions;
+﻿using FluentAssertions;
+using SixLabors.ImageSharp;
 using TagCloud.CoordinatesProviders;
 
 namespace TagCloudTests;

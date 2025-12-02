@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿
 
-namespace TagCloud;
+using SixLabors.ImageSharp;
+
+namespace TagCloud.Extensions;
 
 public static class RectangleExtensions
 {

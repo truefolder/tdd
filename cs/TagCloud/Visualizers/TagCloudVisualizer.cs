@@ -1,37 +1,50 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace TagCloud.Visualizers;
 
-[SuppressMessage("Interoperability", "CA1416:Проверка совместимости платформы")]
 public class TagCloudVisualizer(Color rectangleColor, Color technicalFiguresColor)
 {
-    public void DrawRectangles(Rectangle[] rectangles, Size canvasSize, string savePath)
+    public void DrawRectangles(List<Rectangle> rectangles, Size canvasSize, string savePath)
     {
-        var bitmap = new Bitmap(canvasSize.Width, canvasSize.Height);
-        var graphics = Graphics.FromImage(bitmap);
+        var image = new Image<Rgba32>(canvasSize.Width, canvasSize.Height);
+        var pen = Pens.Dot(rectangleColor, 1);
         
-        var pen = new Pen(rectangleColor, 1);
-        
-        DrawCenterDot(graphics, canvasSize);
-        DrawLimitingCircle(graphics, canvasSize);
+        DrawCenterDot(image, canvasSize);
+        DrawLimitingCircle(image, canvasSize);
         
         foreach (var rectangle in rectangles)
-            graphics.DrawRectangle(pen, new Rectangle(rectangle.Location + canvasSize / 2, rectangle.Size));
+            DrawRectangle(image, pen, new Rectangle(rectangle.Location + canvasSize / 2, rectangle.Size));
         
-        bitmap.Save(savePath);
+        image.Save(savePath);
     }
 
-    private void DrawCenterDot(Graphics graphics, Size canvasSize)
+    private void DrawCenterDot(Image image, SizeF canvasSize)
     {
-        var brush = new SolidBrush(technicalFiguresColor);
-        var size = new Size(10, 10);
-        graphics.FillEllipse(brush, new Rectangle(new Point(canvasSize.Width / 2 - size.Width / 2, canvasSize.Height / 2 - size.Height / 2), size));
+        var size = new SizeF(10, 10);
+        var center = new PointF(canvasSize.Width / 2, canvasSize.Height / 2);
+        var ellipse = new EllipsePolygon(center, size);
+        
+        image.Mutate(x => x.Fill(technicalFiguresColor, ellipse));
     }
 
-    private void DrawLimitingCircle(Graphics graphics, Size canvasSize)
+    private void DrawLimitingCircle(Image image, SizeF canvasSize)
     {
-        var pen = new Pen(technicalFiguresColor, 1);
-        graphics.DrawEllipse(pen, new Rectangle(new Point(canvasSize.Width / 2 - canvasSize.Height / 2), canvasSize with { Width = canvasSize.Height }));
+        var pen = Pens.Dot(technicalFiguresColor, 1);
+        var center = new PointF(canvasSize.Width / 2, canvasSize.Height / 2);
+        var radius = canvasSize.Height / 2;
+        var ellipse = new EllipsePolygon(center, radius);
+        
+        image.Mutate(x => x.Draw(pen, ellipse));
+    }
+
+    private void DrawRectangle(Image image, Pen pen, Rectangle rectangle)
+    {
+        var rectanglePoly = new RectangularPolygon(rectangle);
+        
+        image.Mutate(x => x.Draw(pen, rectanglePoly));
     }
 }

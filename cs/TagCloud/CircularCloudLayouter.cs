@@ -1,5 +1,6 @@
-﻿using System.Drawing;
+﻿using SixLabors.ImageSharp;
 using TagCloud.CoordinatesProviders;
+using TagCloud.Extensions;
 
 namespace TagCloud;
 

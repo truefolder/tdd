@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using FluentAssertions;
+﻿using FluentAssertions;
+using SixLabors.ImageSharp;
 using TagCloud;
 using TagCloud.CoordinatesProviders;
 using TagCloud.Visualizers;
@@ -35,7 +35,7 @@ public class TagCloudVisualizerTests
         var savePath =
             $"{AppDomain.CurrentDomain.BaseDirectory}/{nameof(DrawRectangles_ShouldSaveImageInPath_WhenCorrectPathIsProvided)}.png";
         
-        visualizer.DrawRectangles(rectangles.ToArray(), new Size(1920, 1080), 
+        visualizer.DrawRectangles(rectangles, new Size(1920, 1080), 
             savePath);
 
         File.Exists(savePath).Should().Be(true);

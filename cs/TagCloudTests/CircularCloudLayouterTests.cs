@@ -1,6 +1,6 @@
-﻿using System.Drawing;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework.Interfaces;
+using SixLabors.ImageSharp;
 using TagCloud;
 using TagCloud.CoordinatesProviders;
 using TagCloud.Visualizers;
@@ -31,7 +31,7 @@ public class Tests
         var savePath = $"{AppDomain.CurrentDomain.BaseDirectory}/{testName}failed.png";
 
         var visualizer = new TagCloudVisualizer(Color.Black, Color.Red);
-        visualizer.DrawRectangles(layouter.Rectangles.ToArray(), new Size(1920, 1080), savePath);
+        visualizer.DrawRectangles(layouter.Rectangles, new Size(1920, 1080), savePath);
         
         TestContext.Out.WriteLine($"Saved visualization to {savePath})");
     }
