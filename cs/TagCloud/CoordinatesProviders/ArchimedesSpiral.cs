@@ -5,7 +5,7 @@ namespace TagCloud.CoordinatesProviders;
 
 public class ArchimedesSpiral(PointF center, float tightness, float distanceBetweenPoints) : ICoordinatesProvider
 {
-    public IEnumerable<PointF> GetNextPoint()
+    public IEnumerable<PointF> GetPoints()
     {
         var degreeStep = distanceBetweenPoints * MathF.PI / 180;
         for (var degree = 0f; ; degree += degreeStep)
@@ -19,6 +19,5 @@ public class ArchimedesSpiral(PointF center, float tightness, float distanceBetw
             yield return new PointF(coords.x, coords.y);
         }
         // ReSharper disable once IteratorNeverReturns
-        // TODO: это норм или нет?
     }
 }

@@ -4,5 +4,5 @@ namespace TagCloud.CoordinatesProviders;
 
 public interface ICoordinatesProvider
 {
-    public IEnumerable<PointF> GetNextPoint();
+    public IEnumerable<PointF> GetPoints();
 }

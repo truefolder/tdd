@@ -24,7 +24,7 @@ public class CircularCloudLayouter(Point center, ICoordinatesProvider coordinate
     
     private Point GetNextRectanglePoint(Size rectangleSize)
     {
-        foreach (var point in coordinatesProvider.GetNextPoint().Select(Point.Round))
+        foreach (var point in coordinatesProvider.GetPoints().Select(Point.Round))
         {
             var possibleValidPoint = new Point(point.X - rectangleSize.Width / 2, point.Y - rectangleSize.Height / 2);
             var possibleValidRectangle = new Rectangle(possibleValidPoint, rectangleSize);
