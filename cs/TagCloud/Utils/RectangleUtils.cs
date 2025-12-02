@@ -1,12 +1,10 @@
-﻿
+﻿using SixLabors.ImageSharp;
 
-using SixLabors.ImageSharp;
+namespace TagCloud.Utils;
 
-namespace TagCloud.Extensions;
-
-public static class RectangleExtensions
+public static class RectangleUtils
 {
-    public static Rectangle ShiftToCenter(this Rectangle rectangle, Point center, List<Rectangle> otherRectangles)
+    public static Rectangle ShiftToCenter(Rectangle rectangle, Point center, List<Rectangle> otherRectangles)
     {
         var result = rectangle;
         var canMoveX = true;

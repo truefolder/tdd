@@ -1,6 +1,6 @@
 ﻿using SixLabors.ImageSharp;
 using TagCloud.CoordinatesProviders;
-using TagCloud.Extensions;
+using TagCloud.Utils;
 
 namespace TagCloud;
 
@@ -13,8 +13,9 @@ public class CircularCloudLayouter(Point center, ICoordinatesProvider coordinate
         if (CheckSizeIncorrectness(rectangleSize))
             throw new ArgumentException("Size is incorrect");
         
-        var rect = new Rectangle(GetNextRectanglePoint(rectangleSize), rectangleSize).ShiftToCenter(center, Rectangles);
-        Rectangles.Add(rect);
+        var rect = new Rectangle(GetNextRectanglePoint(rectangleSize), rectangleSize);
+        var shiftedRect = RectangleUtils.ShiftToCenter(rect, center, Rectangles);
+        Rectangles.Add(shiftedRect);
         return rect;
     }
 
