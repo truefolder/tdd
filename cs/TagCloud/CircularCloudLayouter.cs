@@ -16,7 +16,7 @@ public class CircularCloudLayouter(Point center, ICoordinatesProvider coordinate
         var rect = new Rectangle(GetNextRectanglePoint(rectangleSize), rectangleSize);
         var shiftedRect = RectangleUtils.ShiftToCenter(rect, center, Rectangles);
         Rectangles.Add(shiftedRect);
-        return rect;
+        return shiftedRect;
     }
 
     private bool CheckSizeIncorrectness(Size size) =>

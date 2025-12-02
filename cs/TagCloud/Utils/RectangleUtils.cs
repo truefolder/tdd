@@ -6,22 +6,21 @@ public static class RectangleUtils
 {
     public static Rectangle ShiftToCenter(Rectangle rectangle, Point center, List<Rectangle> otherRectangles)
     {
-        var result = rectangle;
         var canMoveX = true;
         var canMoveY = true;
 
         while (canMoveX || canMoveY)
         {
-            canMoveX = TryShiftToCenterByX(result, center, otherRectangles, out var resultedMovementX);
-            canMoveY = TryShiftToCenterByY(result, center, otherRectangles, out var resultedMovementY);
+            canMoveX = TryShiftToCenterByX(rectangle, center, otherRectangles, out var resultedMovementX);
+            canMoveY = TryShiftToCenterByY(rectangle, center, otherRectangles, out var resultedMovementY);
             
             if (canMoveX)
-                result.Offset(resultedMovementX);
+                rectangle.Offset(resultedMovementX);
             if (canMoveY)
-                result.Offset(resultedMovementY);
+                rectangle.Offset(resultedMovementY);
         }
         
-        return result;
+        return rectangle;
     }
 
     private static bool TryShiftToCenterByX(Rectangle rectangle, Point center, List<Rectangle> otherRectangles, out Point resultedMovement)
